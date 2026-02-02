@@ -32,6 +32,11 @@
       <input type="number" id="input-savings" step="any" required />
     </label>
 
+    <label>
+      Bonus income
+      <input type="number" id="input-bonus" step="any" required />
+    </label>
+
     <button type="button" onclick="calculate()">Calculate</button>
     <button type="button" onclick="save()">Save</button>
 
@@ -39,20 +44,24 @@
 
   <div id="feedbackempl"></div>
   <div id="feedbacksavings"></div>
+  <div id="feedbackbonus"></div>
 
    <script>
     let feedback1 = document.getElementById("feedbackempl");
-    let feedback2= document.getElementById("feedbacksavings");
+    let feedback2 = document.getElementById("feedbacksavings");
+    let feedback3 = document.getElementById("feedbacksbonus");
 
     function calculate() {
       const a = document.getElementById('input-empl').value;
       const b = document.getElementById('input-savings').value;
-      feedback1.textContent = feedback2.textContent = "";
+      const c = document.getElementById('input-bonus').value;
+      feedback1.textContent = feedback2.textContent = feedback3.textContent = "";
 
       axios.post("/api/calcTax", {a, b}).then( res => {
-        feedback1.className = feedback2.className = "result";
+        feedback1.className = feedback2.className = feedback3.textContent = "result";
         feedback1.textContent = `Tax on income: ${res.data.taxIncome}`;
         feedback2.textContent = `Tax on savings: ${res.data.taxSavings}`;
+        feedback3.textContent = `Tax on bonus: ${res.data.taxSavings}`;
       }).
       catch (err => displayError(err));
     }
@@ -60,7 +69,8 @@
     function save() {
       const a = document.getElementById('input-empl').value;
       const b = document.getElementById('input-savings').value;
-      feedback1.textContent = feedback2.textContent = "";
+      const c = document.getElementById('input-bonus').value;
+      feedback1.textContent = feedback2.textContent = feedback3.textContent = "";
       
       axios.post("/api/saveTax", {a, b}).then( res => {
         feedback1.className = feedback2.className = "result";
