@@ -48,8 +48,8 @@
 
    <script>
     let feedback1 = document.getElementById("feedbackempl");
-    let feedback2 = document.getElementById("feedbacksavings");
-    let feedback3 = document.getElementById("feedbacksbonus");
+    let feedback2= document.getElementById("feedbacksavings");
+    let feedback3 = document.getElementById("feedbackbonus")
 
     function calculate() {
       const a = document.getElementById('input-empl').value;
@@ -57,11 +57,11 @@
       const c = document.getElementById('input-bonus').value;
       feedback1.textContent = feedback2.textContent = feedback3.textContent = "";
 
-      axios.post("/api/calcTax", {a, b}).then( res => {
-        feedback1.className = feedback2.className = feedback3.textContent = "result";
+      axios.post("/api/calcTax", {a, b, c}).then( res => {
+        feedback1.className = feedback2.className = "result";
         feedback1.textContent = `Tax on income: ${res.data.taxIncome}`;
         feedback2.textContent = `Tax on savings: ${res.data.taxSavings}`;
-        feedback3.textContent = `Tax on bonus: ${res.data.taxSavings}`;
+        feedback3.textContent = `Tax on bonuses: ${res.data.taxBonus}`;
       }).
       catch (err => displayError(err));
     }
@@ -69,8 +69,7 @@
     function save() {
       const a = document.getElementById('input-empl').value;
       const b = document.getElementById('input-savings').value;
-      const c = document.getElementById('input-bonus').value;
-      feedback1.textContent = feedback2.textContent = feedback3.textContent = "";
+      feedback1.textContent = feedback2.textContent = "";
       
       axios.post("/api/saveTax", {a, b}).then( res => {
         feedback1.className = feedback2.className = "result";
@@ -94,7 +93,7 @@
       //}
       else if (err.response.error4) {
         feedback1.className = "error";
-        feedback1.textContent = "Both incomes must be numerical";
+        feedback1.textContent = "All incomes must be numerical";
       }
       else if (err.response.error) {
         feedback.className = "error";
