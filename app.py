@@ -27,7 +27,7 @@ def calcTax():
     if a < 0 or b < 0 or c < 0:
       return jsonify({"error2": "Please provide positive income"}), 400
     savings_tax = 0
-    if b < 1000:
+    if b > 1000:
       savings_tax = 15/100*(b-1000)
     if a < 25000:
       bonus_tax = 20/100*c
